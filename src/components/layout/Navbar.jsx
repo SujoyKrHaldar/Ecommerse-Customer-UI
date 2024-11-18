@@ -1,6 +1,7 @@
+import { Heart, Menu, Search, ShoppingCart, User } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/svg/Logo";
-import { Heart, Search, ShoppingCart, User, Menu } from "lucide-react";
 
 const navLinks = [
   {
@@ -27,9 +28,44 @@ const navLinks = [
 
 const isLoggedin = false;
 
+const useScrollEvent = () => {
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = Math.floor(window.scrollY);
+
+      if (currentScrollPos < 0) return;
+
+      if (currentScrollPos > prevScrollPos) {
+        setIsScrollingDown(true);
+      } else {
+        setIsScrollingDown(false);
+      }
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollPos]);
+
+  return { isScrollingDown };
+};
+
 function Navbar() {
+  const { isScrollingDown } = useScrollEvent();
+
   return (
-    <section className="container">
+    <section
+      className={`container ease-in-out duration-300 
+      ${
+        isScrollingDown
+          ? " -translate-y-1/4 opacity-0 pointer-events-none "
+          : "opacity-100 translate-y-0 pointer-events-auto "
+      }`}
+    >
       <div className="flex items-center justify-between gap-8 bg-white px-4 py-3 border border-zinc-500">
         <div className="flex items-center gap-4">
           <Link className="pl-2 pr-6 border-r border-r-zinc-200" to="/">
