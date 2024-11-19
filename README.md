@@ -1,4 +1,4 @@
-# FASHION FIND 
+# Fashion Find Store
 ## An E-Commerce Application • Customer UI
 
 Welcome to the Fashion Find's Customer UI! This repository contains the front end of an online clothing store designed to provide users with a seamless shopping experience.
